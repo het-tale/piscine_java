@@ -17,7 +17,7 @@ public class Program {
         boolean isPrime = true;
         Scanner scan = new Scanner(System.in);
         int number = scan.nextInt();
-        if (number <= 0 || number == 1) {
+        if (number < 2) {
             System.err.println("IllegalArgument");
             System.exit(-1);
         }
