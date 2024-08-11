@@ -28,7 +28,6 @@ public class Program {
    public static void main(String[] args) {
    Scanner scan = new Scanner(System.in);
    String weekNumber = "";
-   String testResults = "";
    int counter = 0;
    int minGrade = 0;
    int testGrade;
@@ -43,15 +42,16 @@ public class Program {
          System.err.println("IllegalArgument");
          System.exit(-1);
       }
-      testResults = scan.nextLine();
-      Scanner numberScanner = new Scanner(testResults);
       minGrade = 0;
-      while(numberScanner.hasNextInt()) {
-         testGrade = numberScanner.nextInt();
+      int j = 0;
+      while(j < 5) {
+         testGrade = scan.nextInt();
          if (minGrade == 0 || minGrade > testGrade) {
             minGrade = testGrade;
          }
+         j++;
       }
+      weekNumber = scan.nextLine();
       totalMinGrades = storeMinGrades(minGrade, totalMinGrades, counter);
       counter++;
    }
