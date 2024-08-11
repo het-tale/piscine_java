@@ -40,7 +40,7 @@ public class Program {
       }
       if (!weekNumber.equals("Week " + (counter + 1)))
       {
-         System.out.println("IllegalArgument");
+         System.err.println("IllegalArgument");
          System.exit(-1);
       }
       testResults = scan.nextLine();
@@ -56,5 +56,6 @@ public class Program {
       counter++;
    }
    printResult(counter, totalMinGrades);
+   scan.close();
    }
 }
