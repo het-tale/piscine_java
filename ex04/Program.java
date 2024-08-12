@@ -45,7 +45,10 @@ public class Program {
             letters[textChars[i]] = textChars[i];
         }
         bubbleSortDescending(occurences, letters);
-       
+        if (occurences[0] > 999) {
+            System.err.println("You exceeded the number of occurences allowed");
+            System.exit(-1);
+        }
         int max = occurences[0];
        
         int[] hashCounts = new int[10];
