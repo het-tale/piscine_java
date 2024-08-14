@@ -3,6 +3,111 @@ import java.util.Scanner;
 public class Program {
 
     static String[] weekDays = { "MO", "TU", "WE", "TH", "FR", "SA", "SU" };
+    static Scanner sc = new Scanner(System.in);
+    static String input;
+    static String[] students = new String[10];
+
+    static String[] weekClasses = new String[10];
+    static String[][] attendanceRecord = new String[10][4];
+    static int[] time = new int[10];
+    static String[] times = new String[10];
+
+    public static void printList(String[] list) {
+        for (String item : list) {
+            System.out.println(item);
+        }
+    }
+
+    public static boolean containsSpaces(char[] name) {
+        for (char c : name) {
+            if (c == ' ') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String[] getStudentsList() {
+        int i = 0;
+        while (true) {
+            input = sc.nextLine();
+            if (input.equals(".")) {
+                break;
+            }
+            if (i > 9) {
+                System.err.println("max number of students allowed is 10");
+                System.exit(-1);
+            }
+            students[i] = input;
+            if (students[i].length() > 10 || containsSpaces(students[i].toCharArray())) {
+                System.err.println("Student name should not exceed 10 characters or contain spaces");
+                System.exit(-1);
+            }
+            i++;
+        }
+        return (getUpdatedArray(students));
+    }
+
+    public static void getDaysAndTime() {
+        int i = 0;
+        while (true) {
+            int t = 0;
+            input = sc.nextLine();
+            String days = "";
+            if (input.equals(".")) {
+                break;
+            }
+            if (i > 9) {
+                System.err.println("max number of classes allowed is 10");
+                System.exit(-1);
+            }
+            char[] inputChars = input.toCharArray();
+            boolean numberPartCompleted = false;
+            for (int j = 0; j < inputChars.length; j++) {
+                char c = inputChars[j];
+
+                if (c >= '0' && c <= '9' && !numberPartCompleted) {
+                    t = t * 10 + (c - '0');
+                } else {
+                    numberPartCompleted = true;
+                    if (c != ' ') {
+                        days += c;
+                    }
+                }
+            }
+            if (t < 1 || t > 6) {
+                System.err.println("The time should be between 1 PM and 6 PM");
+                System.exit(-1);
+            }
+            weekClasses[i] = days;
+            time[i] = t;
+            i++;
+        }
+        weekClasses = getUpdatedArray(weekClasses);
+    }
+
+    public static String[][] getAttendanceRecord() {
+        int i = 0;
+        while (true) {
+            int j = 0;
+            boolean dot = false;
+            while (j < 4) {
+                input = sc.next();
+                if (input.equals(".")) {
+                    dot = true;
+                    break;
+                }
+                attendanceRecord[i][j] = input;
+
+                j++;
+            }
+            if (dot) {
+                break;
+            }
+            i++;
+        }
+        return attendanceRecord;
+    }
 
     public static int getIndex(String day) {
         int index = 0;
@@ -61,7 +166,7 @@ public class Program {
     }
 
     public static void printFirstLine(int[] times, String[] days) {
-        
+
         System.out.format("%11s", " ");
         for (int i = 1; i <= 30; i++) {
             int index = i % 7;
@@ -99,7 +204,7 @@ public class Program {
                                     System.out.format("%10d|", -1);
                                 }
                                 attendanceRecordIndex = 1;
-                                break ;
+                                break;
                             }
                         }
                     }
@@ -113,108 +218,16 @@ public class Program {
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String input;
-        String[] students = new String[10];
 
-        String[] weekClasses = new String[10];
-        String[][] attendanceRecord = new String[10][4];
-        int[] time = new int[10];
-        String[] times = new String[10];
+        students = getStudentsList();
+        getDaysAndTime();
+        sortDays(weekClasses, times);
+        attendanceRecord = getAttendanceRecord();
+        printFirstLine(time, weekClasses);
 
-        int i = 0;
-        while (true) {
-            input = sc.nextLine();
-            if (input.equals(".")) {
-                break;
-            }
-            students[i] = input;
-            if (students[i].length() > 10) {
-                System.err.println("max length of students name allowed is 10");
-                System.exit(-1);
-            }
-            /**
-             * check for spaces in the name too
-             **/
-            if (i > 9) {
-                System.err.println("max number of students allowed is 10");
-                System.exit(-1);
-            }
-            i++;
-        }
-        i = 0;
-        while (true) {
-            int t = 0;
-            input = sc.nextLine();
-            String days = "";
-            if (input.equals(".")) {
-                break;
-            }
-            if (i > 9) {
-                System.err.println("max number of classes allowed is 10");
-                System.exit(-1);
-            }
-            char[] inputChars = input.toCharArray();
-            boolean numberPartCompleted = false;
-            for (int j = 0; j < inputChars.length; j++) {
-                char c = inputChars[j];
-
-                if (c >= '0' && c <= '9' && !numberPartCompleted) {
-                    t = t * 10 + (c - '0');
-                } else {
-                    numberPartCompleted = true;
-                    if (c != ' ') {
-
-                        days += c;
-                    }
-                }
-            }
-            if (t < 1 || t > 6) {
-                System.err.println("wrong time");
-                System.exit(-1);
-            }
-            weekClasses[i] = days;
-            time[i] = t;
-            times[i] = t + ":00";
-            i++;
-        }
-        i = 0;
-        int length = 0;
-        for (i = 0; i < weekClasses.length; i++) {
-            if (weekClasses[i] != null) {
-                length++;
-            }
-        }
-        String[] daysClasses = new String[length];
-        for (i = 0; i < length; i++) {
-            daysClasses[i] = weekClasses[i];
-        }
-        sortDays(daysClasses, times);
-        i = 0;
-        while (true) {
-            int j = 0;
-            boolean dot = false;
-            while (j < 4) {
-                input = sc.next();
-                if (input.equals(".")) {
-                    dot = true;
-                    break;
-                }
-                attendanceRecord[i][j] = input;
-
-                j++;
-            }
-            if (dot) {
-                break;
-            }
-            i++;
-        }
-        String[] actualStudents = getUpdatedArray(students);
-        printFirstLine(time, daysClasses);
-
-        for (String student: actualStudents) {
+        for (String student : students) {
             System.out.format("%-10s|", student);
-            printAttendance(time, daysClasses, attendanceRecord, student);
+            printAttendance(time, weekClasses, attendanceRecord, student);
         }
 
     }
