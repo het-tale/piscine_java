@@ -1,12 +1,13 @@
 import java.util.Scanner;
 
 public class Program {
-    /**
-     * 
-     * @param args
-     *             The goal of this project is to count character occurences in a
-     *             text
-     */
+    static Scanner sc = new Scanner(System.in);
+    static String text;
+    static int length;
+    static char[] textChars;
+    static int[] occurences = new int[65535];
+    static char[] letters = new char[65535];
+
     public static void bubbleSortDescending(int[] arr, char[] arr1) {
         int n = arr.length;
         boolean swapped;
@@ -32,33 +33,20 @@ public class Program {
         }
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String text = sc.nextLine();
-        int length = text.length();
-        char[] textChars = text.toCharArray();
-        int[] occurences = new int[65535];
-        char[] letters = new char[65535];
+    public static void initializeArray(int[] occurences) {
         for (int i = 0; i < occurences.length; i++) {
             occurences[i] = 0;
         }
+    }
+
+    public static void fillArray(int[] occurences, char[] letters, int length) {
         for (int i = 0; i < length; i++) {
             occurences[textChars[i]] += 1;
             letters[textChars[i]] = textChars[i];
         }
-        bubbleSortDescending(occurences, letters);
-        if (occurences[0] > 999) {
-            System.err.println("You exceeded the number of occurences allowed");
-            System.exit(-1);
-        }
-        int max = occurences[0];
+    }
 
-        int[] hashCounts = new int[10];
-        for (int i = 0; i < 10; i++) {
-            int hashCount = (occurences[i] * 10) / max;
-            hashCounts[i] = hashCount;
-        }
-
+    public static void printResult(int[] occurences, char[] letters, int[] hashCounts) {
         int k = 0;
         for (int j = 0; j < 12; j++) {
             if (j == 11) {
@@ -80,4 +68,27 @@ public class Program {
             System.out.println("");
         }
     }
+
+    public static void main(String[] args) {
+        text = sc.nextLine();
+        length = text.length();
+        textChars = text.toCharArray();
+        initializeArray(occurences);
+        fillArray(occurences, letters, length);
+        bubbleSortDescending(occurences, letters);
+        if (occurences[0] > 999) {
+            System.err.println("You exceeded the number of occurences allowed");
+            System.exit(-1);
+        }
+        int max = occurences[0];
+
+        int[] hashCounts = new int[10];
+        for (int i = 0; i < 10; i++) {
+            int hashCount = (occurences[i] * 10) / max;
+            hashCounts[i] = hashCount;
+        }
+        printResult(occurences, letters, hashCounts);
+    }
 }
+
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWKFKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42

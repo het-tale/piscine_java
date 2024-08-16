@@ -187,7 +187,6 @@ public class Program {
         }
         for (int i = 1; i <= 30; i++) {
             int index = i % 7;
-            int in = -1;
             for (int k = 0; k < days.length; k++) {
                 if (weekDays[index].equals(days[k])) {
                     attendanceRecordIndex = 0;
