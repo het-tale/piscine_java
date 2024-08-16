@@ -9,20 +9,10 @@ public class Program {
         }
         return result;
     }
-    public static double sqrt(int number) {
-        double sqrt = number / 2;
-        double t;
-        if (number < 2)
-            sqrt = number;
-        do {
-            t = sqrt;
-            sqrt = (t + (number / t)) / 2;
-        } while ((t - sqrt) != 0);
-        return sqrt;
-    }
+    
     public static boolean isPrime(int number) {
         boolean isPrime = true;
-        for (int i = 2; i <= sqrt(number); i++) {
+        for (int i = 2; i * i <= number; i++) {
             if (number % i == 0) {
                 isPrime = false;
                 break ;
@@ -43,6 +33,7 @@ public class Program {
                 count++;
             }
         }
+        scan.close();
         System.out.println("Count of coffee-request : " + count);
     }
 }
