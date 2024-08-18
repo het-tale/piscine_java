@@ -48,6 +48,7 @@ public class Program {
 
     public static void printResult(int[] occurences, char[] letters, int[] hashCounts) {
         int k = 0;
+        
         for (int j = 0; j < 11; j++) {
             for (int i = 0; i < 10; i++) {
                 if (j > (10 - hashCounts[i])) {
@@ -68,6 +69,10 @@ public class Program {
     public static void main(String[] args) {
         text = sc.nextLine();
         length = text.length();
+        if (length == 0) {
+            System.err.println("You should enter a non empty text");
+            System.exit(-1);
+        }
         textChars = text.toCharArray();
         initializeArray(occurences);
         fillArray(occurences, letters, length);
@@ -87,5 +92,5 @@ public class Program {
     }
 }
 
-//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWKFKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42
-//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWKFKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42漢漢漢漢
+// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWKFKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42
+// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWKFKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42漢漢漢漢
