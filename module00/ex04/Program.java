@@ -48,25 +48,21 @@ public class Program {
 
     public static void printResult(int[] occurences, char[] letters, int[] hashCounts) {
         int k = 0;
-        for (int j = 0; j < 12; j++) {
-            if (j == 11) {
-                for (int i = 0; i < 10; i++) {
-                    System.out.print(letters[i] + " ");
-                }
-                System.out.println("");
-                break;
-            }
+        for (int j = 0; j < 11; j++) {
             for (int i = 0; i < 10; i++) {
-                if (hashCounts[i] > (10 - j)) {
+                if (j > (10 - hashCounts[i])) {
                     System.out.print("# ");
                 }
-            }
-            while (k < 10 && j == 10 - hashCounts[k]) {
-                System.out.print(occurences[k] + " ");
-                k++;
+                if (j == 10 - hashCounts[i]) {
+                    System.out.print(occurences[i] + " ");
+                }
             }
             System.out.println("");
         }
+        for (int i = 0; i < 10; i++) {
+            System.out.print(letters[i] + " ");
+        }
+        System.out.println("");
     }
 
     public static void main(String[] args) {
@@ -92,3 +88,4 @@ public class Program {
 }
 
 //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWKFKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDWEWWKFKKDKKDSKAKLSLDKSKALLLLLLLLLLRTRTETWTWWWWWWWWWWOOOOOOO42漢漢漢漢
