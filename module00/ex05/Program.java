@@ -126,7 +126,7 @@ public class Program {
             for (int k = i + 1; k < days.length; k++) {
                 index1 = getIndex(days[i]);
                 index2 = getIndex(days[k]);
-                if (index1 > index2) {
+                if (index1 > index2 || (index1 == index2 && time[i] > time[k])) {
                     temp = days[i];
                     days[i] = days[k];
                     days[k] = temp;
@@ -208,7 +208,7 @@ public class Program {
                         }
                     }
                     if (attendanceRecordIndex == 0) {
-                        System.out.format("%10s", "|");
+                        System.out.format("%10s|", "");
                     }
                 }
             }
