@@ -117,10 +117,10 @@ public class Program {
         return index;
     }
 
-    public static void sortDays(String[] days, String[] time) {
+    public static void sortDays(String[] days, int[] time) {
         for (int i = 0; i < days.length; i++) {
             String temp;
-            String temp2;
+            int temp2;
             int index1 = 0;
             int index2 = 0;
             for (int k = i + 1; k < days.length; k++) {
@@ -220,7 +220,7 @@ public class Program {
 
         students = getStudentsList();
         getDaysAndTime();
-        sortDays(weekClasses, times);
+        sortDays(weekClasses, time);
         attendanceRecord = getAttendanceRecord();
         printFirstLine(time, weekClasses);
 
