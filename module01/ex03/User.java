@@ -1,8 +1,9 @@
 package module01.ex03;
 
 /**
- * We need to add transactions field of TransactionsList type to User class so that
-each user can store the list of their transactions.
+ * We need to add transactions field of TransactionsList type to User class so
+ * that
+ * each user can store the list of their transactions.
  */
 public class User {
     private int identifier;
@@ -41,6 +42,10 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public TransactionsList getTransactions() {
+        return transactions;
     }
 
     @Override
