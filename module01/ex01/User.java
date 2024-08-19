@@ -1,12 +1,12 @@
-package module01.ex00;
+package module01.ex01;
 
 public class User {
     private int identifier;
     private String name;
     private int balance;
 
-    public User(int identifier, String name, int balance) {
-        this.identifier = identifier;
+    public User(String name, int balance) {
+        this.identifier = UserIdsGenerator.getInstance().generateId();
         this.name = name;
         if (balance < 0) {
             throw new IllegalArgumentException("Balance can't be negative.");
