@@ -1,2 +1,4 @@
 *.class
 /*/*/compiled
+
+/*/*/result.txt
