@@ -1,2 +1,5 @@
 *.class
 /*/*/compiled
+
+/*/*/result.txt
+/module02/ex01/*.txt
