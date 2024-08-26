@@ -13,12 +13,32 @@ public class FileManager {
         this.currentDir = new File(path);
     }
 
+    public long getFolderSize(File dir) {
+        File[] files = dir.listFiles();
+        long length = 0;
+        for (File file : files) {
+            if (file.isFile()) {
+                length += file.length();
+            }
+            else {
+                length += getFolderSize(file);
+            }
+        }
+        return length;
+    }
     public void listContent() throws Exception {
         File[] files = currentDir.listFiles();
         for (File file : files) {
             System.out.print(file.getName());
             System.out.print(" ");
-            System.out.print(file.length() * 1024);
+            double size;
+            if (file.isFile()) {
+                size = (double) file.length() / 1024;
+            }
+            else {
+                size = (double) getFolderSize(file) / 1024;
+            }
+            System.out.print(Math.floor(size * 100) / 100);
             System.out.println(" KB");
         }
     }
@@ -30,14 +50,14 @@ public class FileManager {
             newDir = new File(path);
         } else {
 
-            newDir = new File(this.currentDir, path).getCanonicalFile();
+            newDir = new File(this.currentDir, path);
         }
 
         if (newDir.exists() && newDir.isDirectory()) {
             this.currentDir = newDir;
             System.out.println(this.currentDir.getCanonicalPath());
         } else {
-            System.err.println("Directory does not exist: " + newDir.getCanonicalPath());
+            System.err.println("Directory does not exist: " + path);
         }
     }
 
@@ -71,7 +91,16 @@ public class FileManager {
                     listContent();
                     break;
                 case "cd":
-                    changeDirectory(options[1]);
+                    if (options.length == 1) {
+                        changeDirectory("");
+                    }
+                    else if (options.length == 2) {
+                        changeDirectory(options[1]);
+                    }
+                    else {
+                        System.out.println("Invalid arguments");
+                        break;
+                    }
                     break;
                 case "mv":
                     if (options.length != 3) {
@@ -84,6 +113,7 @@ public class FileManager {
                     exit();
                     break;
                 default:
+                    System.out.println("Please type a valid option");
                     break;
             }
         }
