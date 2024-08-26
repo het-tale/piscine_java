@@ -1,6 +1,7 @@
 package module02.ex02;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
@@ -9,8 +10,12 @@ public class FileManager {
     private File currentDir;
     private Scanner scanner = new Scanner(System.in);
 
-    public FileManager(String path) {
+    public FileManager(String path) throws FileNotFoundException {
         this.currentDir = new File(path);
+        if (!this.currentDir.exists()) {
+            throw new FileNotFoundException("Directory does not exist: " + path);
+        }
+        System.out.println(path);
     }
 
     public long getFolderSize(File dir) {
@@ -19,13 +24,13 @@ public class FileManager {
         for (File file : files) {
             if (file.isFile()) {
                 length += file.length();
-            }
-            else {
+            } else {
                 length += getFolderSize(file);
             }
         }
         return length;
     }
+
     public void listContent() throws Exception {
         File[] files = currentDir.listFiles();
         for (File file : files) {
@@ -34,8 +39,7 @@ public class FileManager {
             double size;
             if (file.isFile()) {
                 size = (double) file.length() / 1024;
-            }
-            else {
+            } else {
                 size = (double) getFolderSize(file) / 1024;
             }
             System.out.print(Math.floor(size * 100) / 100);
@@ -91,16 +95,11 @@ public class FileManager {
                     listContent();
                     break;
                 case "cd":
-                    if (options.length == 1) {
-                        changeDirectory("");
-                    }
-                    else if (options.length == 2) {
-                        changeDirectory(options[1]);
-                    }
-                    else {
+                    if (options.length != 2) {
                         System.out.println("Invalid arguments");
                         break;
                     }
+                    changeDirectory(options[1]);
                     break;
                 case "mv":
                     if (options.length != 3) {
