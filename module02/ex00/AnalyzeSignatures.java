@@ -53,7 +53,6 @@ public class AnalyzeSignatures {
         for (int i = 0; i < bytesRead; i++) {
             sb.append(String.format("%02X", bytes[i]));
         }
-        System.out.println("The file signature: " + sb.toString());
         file.close();
         return sb.toString();
     }
