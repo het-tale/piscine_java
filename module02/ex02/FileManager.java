@@ -3,6 +3,8 @@ package module02.ex02;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
@@ -67,18 +69,26 @@ public class FileManager {
 
     public void moveDirectory(String what, String where) throws Exception {
         File source = new File(this.currentDir, what);
-        File destination = new File(this.currentDir, where);
+        File destination = new File(where);
+        Path destinationPath = Paths.get(destination.getCanonicalPath());
+        Path sourcePath = Paths.get(what);
 
         if (!source.exists()) {
-            System.err.println("Source file does not exist: " + source.getCanonicalPath());
-            return;
+            System.err.println("Source directory does not exist: " + what);
         }
-        if (source.exists() && source.isFile() && destination.exists() && destination.isDirectory()) {
-            Files.move(source.toPath(), destination.toPath().resolve(source.getName()),
-                    StandardCopyOption.REPLACE_EXISTING);
-        } else {
-            source.renameTo(destination);
+        if (sourcePath.getParent() == null) {
+            source = new File(this.currentDir, what);
+            sourcePath = Paths.get(this.currentDir.getCanonicalPath(), what);
         }
+        if (destinationPath.getParent() == null) {
+            destination = new File(this.currentDir, where);
+            destinationPath = Paths.get(this.currentDir.getCanonicalPath(), where);
+        }
+        if (destination.isDirectory()) {
+            destinationPath = Paths.get(destination.getCanonicalPath(), source.getName());
+        }
+        Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+        
     }
 
     public void exit() {
