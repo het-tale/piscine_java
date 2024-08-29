@@ -9,6 +9,9 @@ public class Program {
                 throw new IllegalArgumentNumberException();
             }
             String[] arguments = args[0].split("=");
+            if (arguments.length != 2) {
+                throw new IllegalArgumentNumberException();
+            }
             String folderPath = arguments[1];
             FileManager fm = new FileManager(folderPath);
             fm.application();
