@@ -1,5 +1,7 @@
 package module02.ex02;
 
+import java.io.FileNotFoundException;
+
 public class Program {
     public static void main(String[] args) {
         try {
@@ -7,12 +9,18 @@ public class Program {
                 throw new IllegalArgumentNumberException();
             }
             String[] arguments = args[0].split("=");
+            if (arguments.length != 2) {
+                throw new IllegalArgumentNumberException();
+            }
             String folderPath = arguments[1];
-            System.out.println(folderPath);
             FileManager fm = new FileManager(folderPath);
             fm.application();
             
-        } catch (Exception e) {
+        }
+        catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+        catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }

@@ -60,20 +60,19 @@ public class StringSimilarity {
     public void calculateSimilarity() {
         Vector<Integer> vectA = createVector(this.textA);
         Vector<Integer> vectB = createVector(this.textB);
-        double numerator = 0;
+        float numerator = 0;
         double sumA = 0;
         double sumB = 0;
-        double denominator = 0;
+        float denominator = 0;
         for (int i = 0; i < vectA.size(); i++) {
             numerator += vectA.elementAt(i) * vectB.elementAt(i);
             sumA += vectA.elementAt(i) * vectA.elementAt(i);
             sumB += vectB.elementAt(i) * vectB.elementAt(i);
         }
-        denominator = Math.sqrt(sumA) * Math.sqrt(sumB);
-        double similarity = numerator / denominator;
+        denominator = (float) (Math.sqrt(sumA) * Math.sqrt(sumB));
+        float similarity = numerator / denominator;
         double rounded = Math.floor(similarity * 100) / 100;
-        System.out.format("Similarity = %.2f", rounded);
-        System.out.println("");
+        System.out.println("Similarity: " + rounded);
 
     }
 
