@@ -14,7 +14,7 @@ public class FileManager {
 
     public FileManager(String path) throws FileNotFoundException {
         this.currentDir = new File(path);
-        if (!this.currentDir.exists()) {
+        if (!this.currentDir.exists() || this.currentDir.isFile()) {
             throw new FileNotFoundException("Directory does not exist: " + path);
         }
         System.out.println(path);
@@ -70,7 +70,7 @@ public class FileManager {
     public void moveDirectory(String what, String where) throws Exception {
         File source = new File(this.currentDir, what);
         File destination = new File(where);
-        Path destinationPath = Paths.get(destination.getCanonicalPath());
+        Path destinationPath = Paths.get(where);
         Path sourcePath = Paths.get(what);
 
         if (!source.exists()) {
