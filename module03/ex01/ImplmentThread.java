@@ -16,11 +16,12 @@ public class ImplmentThread {
                 this.setName("Hen");
                 count--;
                 notifyAll();
-            } else {
+            }
+            else {
                 try {
                     wait();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.err.println(e.getMessage());
                 }
             }
         }
@@ -33,11 +34,12 @@ public class ImplmentThread {
                 this.setName("Egg");
                 count--;
                 notifyAll();
-            } else {
+            }
+            else {
                 try {
                     wait();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.err.println(e.getMessage());
                 }
             }
         }

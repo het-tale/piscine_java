@@ -33,6 +33,9 @@ public class Program {
                 throw new IllegalArgumentNumberException();
             }
             String[] arguments = args[0].split("=");
+            if (arguments.length != 2) {
+                throw new IllegalArgumentNumberException();
+            }
             int count = Integer.parseInt(arguments[1]);
             // firstMethod(count);
             secondMethod(count);
