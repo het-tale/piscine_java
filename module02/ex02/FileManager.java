@@ -15,7 +15,7 @@ public class FileManager {
     public FileManager(String path) throws FileNotFoundException {
         this.currentDir = new File(path);
         if (!this.currentDir.exists() || this.currentDir.isFile()) {
-            throw new FileNotFoundException("Directory does not exist: " + path);
+            throw new FileNotFoundException("Directory does not exist or the type is a File: " + path);
         }
         System.out.println(path);
     }
