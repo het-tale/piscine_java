@@ -1,6 +1,6 @@
 package module02.ex01;
 
-import java.io.FileReader;
+import java.io.*;
 
 public class Program {
     private static String textA;
@@ -8,10 +8,11 @@ public class Program {
 
     public static String readFromFile(String path) throws Exception {
         String text = "";
-        int character;
+        String textLine;
         FileReader file = new FileReader(path);
-        while ((character = file.read()) != -1) {
-            text += (char) character;
+        BufferedReader buffer = new BufferedReader(file);
+        while ((textLine = buffer.readLine()) != null) {
+            text += textLine;
         }
         file.close();
         return text;

@@ -20,30 +20,13 @@ public class FileManager {
         System.out.println(path);
     }
 
-    public long getFolderSize(File dir) {
-        File[] files = dir.listFiles();
-        long length = 0;
-        for (File file : files) {
-            if (file.isFile()) {
-                length += file.length();
-            } else {
-                length += getFolderSize(file);
-            }
-        }
-        return length;
-    }
-
     public void listContent() throws Exception {
         File[] files = currentDir.listFiles();
         for (File file : files) {
             System.out.print(file.getName());
             System.out.print(" ");
             double size;
-            if (file.isFile()) {
-                size = (double) file.length() / 1024;
-            } else {
-                size = (double) getFolderSize(file) / 1024;
-            }
+            size = (double) file.length() / 1024;
             System.out.print(Math.floor(size * 100) / 100);
             System.out.println(" KB");
         }
@@ -75,6 +58,7 @@ public class FileManager {
 
         if (!source.exists()) {
             System.err.println("Source directory does not exist: " + what);
+            return;
         }
         if (sourcePath.getParent() == null) {
             source = new File(this.currentDir, what);
@@ -88,7 +72,7 @@ public class FileManager {
             destinationPath = Paths.get(destination.getCanonicalPath(), source.getName());
         }
         Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-        
+
     }
 
     public void exit() {
@@ -98,32 +82,36 @@ public class FileManager {
 
     public void application() throws Exception {
         while (true) {
-            String option = scanner.nextLine();
-            String[] options = option.split(" ");
-            switch (options[0]) {
-                case "ls":
-                    listContent();
-                    break;
-                case "cd":
-                    if (options.length != 2) {
-                        System.out.println("Invalid arguments");
+            try {
+                String option = scanner.nextLine();
+                String[] options = option.split(" ");
+                switch (options[0]) {
+                    case "ls":
+                        listContent();
                         break;
-                    }
-                    changeDirectory(options[1]);
-                    break;
-                case "mv":
-                    if (options.length != 3) {
-                        System.out.println("Invalid arguments");
+                    case "cd":
+                        if (options.length != 2) {
+                            System.out.println("Invalid arguments");
+                            break;
+                        }
+                        changeDirectory(options[1]);
                         break;
-                    }
-                    moveDirectory(options[1], options[2]);
-                    break;
-                case "exit":
-                    exit();
-                    break;
-                default:
-                    System.out.println("Please type a valid option");
-                    break;
+                    case "mv":
+                        if (options.length != 3) {
+                            System.out.println("Invalid arguments");
+                            break;
+                        }
+                        moveDirectory(options[1], options[2]);
+                        break;
+                    case "exit":
+                        exit();
+                        break;
+                    default:
+                        System.out.println("Please type a valid option");
+                        break;
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
             }
         }
 

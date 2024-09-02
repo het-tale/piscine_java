@@ -46,8 +46,8 @@ public class AnalyzeSignatures {
         byte[] bytes = new byte[8];
         int bytesRead = file.read(bytes);
         if (bytesRead == -1) {
-            System.err.println("File is empty.");
-            System.exit(-1);
+            file.close();
+            throw new EmptyFileException();
         }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytesRead; i++) {
@@ -121,15 +121,21 @@ public class AnalyzeSignatures {
             throw new NotEnoughAnalysisDataException();
         }
         while (true) {
-            String input = scanner.nextLine();
-            if (input.equals("42")) {
-                break;
-            }
-            String signature = getFileSignature(input);
+            try {
+                String input = scanner.nextLine();
+                if (input.equals("42")) {
+                    break;
+                }
+                String signature = getFileSignature(input);
+                System.out.println("The Signature: " + signature);
 
-            list.add(signature);
-            printResult(signature);
+                list.add(signature);
+                printResult(signature);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
+
         writeResult(list);
     }
 }
